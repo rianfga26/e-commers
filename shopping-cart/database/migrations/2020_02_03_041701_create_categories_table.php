@@ -16,7 +16,7 @@ class CreateCategoriesTable extends Migration
         // menjalankan migrate ketika membuat tabel bernama categories
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->string('name'); //STRING SAMA DENGAN VARCHAR
 
             //JADI KITA AKAN MEMBUAT CATEGORI INI MEMILIKI ANAK KATEGORI
             //SEHINGGA DIBUAT STRUKTUR DIMANA KATEGORI YANG MEMILIKI parent_id

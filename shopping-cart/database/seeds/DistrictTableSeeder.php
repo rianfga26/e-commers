@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DistrictTableSeeder extends Seeder
 {
@@ -11,8 +12,6 @@ class DistrictTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-
         DB::insert("INSERT INTO `districts` (`id`, `province_id`, `city_id`, `name`, `created_at`, `updated_at`) VALUES
         (1, 21, 1, 'Arongan Lambalek', '2019-08-29 13:00:56', '2019-08-29 13:00:56'),
         (2, 21, 1, 'Bubon', '2019-08-29 13:00:56', '2019-08-29 13:00:56'),
