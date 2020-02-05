@@ -16,7 +16,8 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             // field
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->string('name');
+            $table->string('slug');
 
             //ADAPUN category_id NYA NNTI AKAN MERUJUK KE TABLE categories
             //DIMANA UNTUK SAAT INI BELUM AKAN DIBAHAS RELASI ANTAR TABLE-NYA

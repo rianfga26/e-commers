@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Categori Route
+Route::get('/api/category', 'CategoryController@index');
+Route::get('/api/category/{id}', 'CategoryController@show');
+Route::get('/api/category/delete/{id}', 'CategoryController@destroy');
+Route::post('/api/category/edit/{id}', 'CategoryController@update');
+Route::post('/api/category/add', 'CategoryController@store');

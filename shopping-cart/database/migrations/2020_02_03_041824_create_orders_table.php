@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->string('invoice')->unique();
             $table->string('customer_id');
-          
+            
             //BAGIAN INI MUNGKIN ADA YANG BERTANYA, KOK INFO INI DISIMPAN LAGI?
             //SEDANGKAN SUDAH ADA RELASI KE TABLE CUSTOMERS
             //HAL INI DILAKUKAN, JIKA SUATU SAAT CUSTOMER MENGUBAH PROFILENYA
