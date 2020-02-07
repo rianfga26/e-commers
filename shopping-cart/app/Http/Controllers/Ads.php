@@ -4,23 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class Ads extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
-        $showall = \App\Category::all();
+        $showall = \App\Iklan::all();
 
         if (count($showall) > 0) {
             $res['data'] = $showall;
             return response($res);
         }else {
-            $res['message'] = "Empty!";
+            $res['message'] = "Data Tidak Ada!";
             return response($res);
         }
     }
@@ -44,15 +38,20 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required'
+            'judul' => 'required',
+            'gambar' => 'required|unique:iklans',
+            'deskripsi' => 'required',
+            'link' => 'required'
         ]);
 
-        $data = new \App\Category;
-        $data->name = $request->input('name');
-        $data->slug = $request->input('name');
+        $data = new \App\Iklan;
+        $data->judul = $request->input('judul');
+        $data->gambar = $request->input('gambar');
+        $data->deskripsi = $request->input('deskripsi');
+        $data->link = $request->input('link');
 
         if ($data->save()) {
-            $res['message'] = "Success!";
+            $res['message'] = "Success";
             $res['value'] = $data;
             return response($res);
         }else{
@@ -70,7 +69,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         //
-        $data = \App\Category::where('id', $id)->get();
+        $data = \App\Iklan::where('id', $id)->get();
 
         if (count($data) > 0) {
             $res['data'] = $data;
@@ -101,12 +100,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $nama = $request->input('name');
 
-        $data = \App\Category::where('id', $id)->first();
-        $data->name = $nama;
-        $data->slug = $nama;
+        $data = \App\Iklan::where('id', $id)->first();
+        $data->judul = $request->input('judul');
+        $data->gambar = $request->input('gambar');
+        $data->deskripsi = $request->input('deskripsi');
+        $data->link = $request->input('link');
 
         if ($data->save()) {
             $res['message'] = 'success!';
@@ -127,7 +126,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //
-        $hapus = \App\Category::find($id);
+        $hapus = \App\Iklan::find($id);
         if (empty($hapus)) {
             $res['message'] = 'data tidak ditemukan';
             return response($res);
