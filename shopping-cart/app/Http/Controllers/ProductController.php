@@ -3,18 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
-class CategoryController extends Controller
+class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
-        $showall = \App\Category::all();
+        $showall = \App\Product::all();
 
         if (count($showall) > 0) {
             $res['data'] = $showall;
@@ -44,12 +39,21 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required'
+            'nama' => 'required',
+            'deskripsi' => 'required',
+            'image' => 'required|unique:products',
+            'harga' => 'required|numeric',
+            'berat' => 'required|numeric'
         ]);
 
-        $data = new \App\Category;
-        $data->name = $request->input('name');
-        $data->slug = $request->input('name');
+        $data = new \App\Product;
+        $data->name = $request->input('nama');
+        $data->slug = Str::slug($request->input('nama'));
+        $data->description = $request->input('deskripsi');
+        $data->image = $request->input('image');
+        $data->price = $request->input('harga');
+        $data->weight = $request->input('berat');
+
 
         if ($data->save()) {
             $res['message'] = "Success!";
@@ -70,7 +74,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         //
-        $data = \App\Category::where('id', $id)->get();
+        $data = \App\Product::where('id', $id)->get();
 
         if (count($data) > 0) {
             $res['data'] = $data;
@@ -104,9 +108,14 @@ class CategoryController extends Controller
         //
         $nama = $request->input('name');
 
-        $data = \App\Category::where('id', $id)->first();
-        $data->name = $nama;
-        $data->slug = $nama;
+        $data = \App\Product::where('id', $id)->first();
+        $data->name = $request->input('nama');
+        $data->slug = $request->input('nama');
+        $data->description = $request->input('deskripsi');
+        $data->image = $request->input('image');
+        $data->price = $request->input('harga');
+        $data->weight = $request->input('berat');
+
 
         if ($data->save()) {
             $res['message'] = 'success!';
@@ -127,7 +136,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //
-        $hapus = \App\Category::find($id);
+        $hapus = \App\Product::find($id);
         if (empty($hapus)) {
             $res['message'] = 'data tidak ditemukan';
             return response($res);
